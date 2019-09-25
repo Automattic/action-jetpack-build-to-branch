@@ -19,15 +19,20 @@ git_setup
 git remote update
 git fetch --all
 
+echo "Push branch: " $INPUT_BRANCH_PUSH
+echo "Pull branch: " $INPUT_BRANCH_PULL
+
 # Will create branch if it does not exist
-if [[ $( git branch -r | grep "$INPUT_BRANCH" ) ]]; then
-   git checkout "${INPUT_PUSH_BRANCH}"
+if [[ $( git branch -r | grep "$INPUT_BRANCH_PUSH" ) ]]; then
+   git checkout "${INPUT_BRANCH_PUSH}"
 else
-   git checkout -b "${INPUT_PUSH_BRANCH}"
+   git checkout -b "${INPUT_BRANCH_PUSH}"
+   git push --set-upstream origin "${INPUT_BRANCH_PUSH}"
 fi
 
-git reset --hard "origin/${INPUT_PULL_BRANCH}"
+git reset --hard origin/"${INPUT_BRANCH_PULL}"
 yarn build-production
-./bin/prepare-release-branch.sh
-git commit -am "Update from ${INPUT_PULL_BRANCH}"
+bin/prepare-built-branch.sh
+git add .
+git commit -m "Update from ${INPUT_BRANCH_PULL}"
 git push -f
