@@ -1,0 +1,18 @@
+name: 'Jetpack: Build Production Branch'
+description: 'Builds a production version of a branch and pushes to another branch.'
+author: '@automattic/jetpack'
+inputs:
+  branch_pull:
+    description: 'Branch ref to build from.'
+    required: false
+    default: 'master'
+  branch_push:
+    description: 'Branch ref to push the changes to'
+    required: true
+  commit_message:
+    description: 'Write the commit message'
+    required: false
+    default: 'Automated commit from action'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
