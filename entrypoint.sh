@@ -26,8 +26,8 @@ else
    git checkout -b "${INPUT_PUSH_BRANCH}"
 fi
 
-git reset --hard origin/"${INPUT_PULL_BRANCH}"
+git reset --hard "origin/${INPUT_PULL_BRANCH}"
 yarn build-production
 ./bin/prepare-release-branch.sh
-git commit -am "Update from master"
+git commit -am "Update from ${INPUT_PULL_BRANCH}"
 git push -f
